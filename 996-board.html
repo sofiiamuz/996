@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>996 Arbeitsrhythmus</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #e63946;
+    --red-dim: #8b1a22;
+    --gold: #f4a261;
+    --bg: #09090f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --text: #f0ede8;
+    --muted: #9797a9;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(230,57,70,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,57,70,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    from { transform: translateY(0); }
+    to   { transform: translateY(60px); }
+  }
+
+  .hero-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, var(--bg) 80%);
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 18vw, 180px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title span { color: var(--red); }
+
+  .hero-sub {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.5vw, 24px);
+    color: var(--muted);
+    margin-top: 1.5rem;
+    max-width: 560px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-stat-row {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    margin-top: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-stat { text-align: center; }
+
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 54px;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+
+  .hero-stat-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  .hero-nav {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    line-height: 1;
+    color: var(--red-dim);
+    opacity: 0.5;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .section-title-group { padding-top: 0.5rem; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.05;
+    color: var(--text);
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 0 0 3rem;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .card {
+    background: var(--bg2);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .card:hover { background: var(--bg3); }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .card-body {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .card-body strong { color: var(--text); font-weight: 500; }
+
+  /* ── WEEK VISUALIZER ── */
+  .week-vis {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    margin: 2rem 0;
+  }
+
+  .week-vis-title {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .week-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+
+  .day-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  .day-name {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .day-bar-wrap {
+    width: 100%;
+    height: 220px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .bar-segment {
+    width: 100%;
+    transition: height 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .seg-work { background: var(--red); }
+  .seg-sleep { background: #2a4a7f; }
+  .seg-free { background: #2d6a4f; }
+  .seg-sunday { background: #4a3728; }
+
+  .day-hours {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .week-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 2.5rem 2rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    transform: translateX(-4px);
+    box-shadow: 0 0 0 3px var(--bg), 0 0 0 4px var(--red-dim);
+  }
+
+  .timeline-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    color: var(--red);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .timeline-event {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .timeline-detail {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 580px;
+  }
+
+  /* ── STAT BLOCKS ── */
+  .stat-blocks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .stat-block {
+    background: var(--bg2);
+    padding: 2rem 1.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-block-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--red);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-block-label {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── COMPANY CARDS ── */
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .company-card {
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .company-card.pro { border-top: 3px solid var(--red); }
+  .company-card.con { border-top: 3px solid #2d6a4f; }
+
+  .company-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+
+  .tag-pro { background: rgba(230,57,70,0.15); color: var(--red); }
+  .tag-con { background: rgba(45,106,79,0.2); color: #52b788; }
+
+  .company-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .company-quote {
+    font-family: 'DM Serif Display';
+    font-style: italic;
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .company-detail {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── HEALTH BARS ── */
+  .health-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .health-item { }
+
+  .health-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .health-name { font-size: 19px; color: var(--text); font-weight: 500; }
+
+  .health-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--red);
+    letter-spacing: 0.05em;
+  }
+
+  .health-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red-dim), var(--red));
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .health-note {
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin: 2rem 0;
+  }
+
+  .compare-table { width: 100%; border-collapse: collapse; }
+
+  .compare-table th {
+    background: var(--bg3);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table td {
+    padding: 0.9rem 1.25rem;
+    font-size: 14px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .td-country { font-weight: 500; }
+  .td-hours { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; }
+  .td-high { color: var(--red); }
+  .td-low { color: #52b788; }
+  .td-mid { color: var(--gold); }
+
+  .flag { margin-right: 8px; font-size: 18px; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    padding: 3rem 2.5rem;
+    border-left: 4px solid var(--red);
+    background: var(--bg2);
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .pull-quote::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--red-dim);
+    opacity: 0.3;
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .pull-quote-text {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.5;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+  }
+
+  .pull-quote-attr {
+    margin-top: 1rem;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: normal;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  /* section separator */
+  .sep-line {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .week-days { grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .hero-stat-row { gap: 1.5rem; }
+    .hero-stat-num { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HERO ════════════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">China · Tech-Industrie · Arbeitskultur</p>
+    <h1 class="hero-title"><span>996</span><br>Arbeitsrhythmus</h1>
+    <p class="hero-sub">Von 9 Uhr morgens bis 9 Uhr abends, 6 Tage die Woche — das ist kein Job. Das ist ein Lebensstil, den Millionen bezahlen.</p>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <span class="hero-stat-num">72</span>
+        <span class="hero-stat-label">Stunden / Woche</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">80%</span>
+        <span class="hero-stat-label">Mehr als EU-Standard</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">57h</span>
+        <span class="hero-stat-label">Ø Tech-Sektor China</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep-line"></div>
+
+<!-- ════════════════ Q1: WAS IST 996? ════════════════ -->
+<section class="section" id="q1">
+  <div class="section-header reveal">
+    <div class="section-num">01</div>
+    <div class="section-title-group">
+      <p class="section-label">Frage 1</p>
+      <h2 class="section-title">Was ist der 996-Arbeitsrhythmus und wie sieht eine typische Arbeitswoche aus?</h2>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="two-col">
+    <div>
+      <div class="cards-grid reveal reveal-delay-1">
+        <div class="card">
+          <div class="card-icon">🕘</div>
+          <h3 class="card-title">Die Definition</h3>
+          <p class="card-body">Der Begriff <strong>„996"</strong> steht für 9 Uhr morgens bis 9 Uhr abends, 6 Tage pro Woche. Das ergibt <strong>72 Stunden</strong> Arbeit wöchentlich — fast doppelt so viel wie die europäische Norm von 40 Stunden.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📅</div>
+          <h3 class="card-title">Montag bis Samstag</h3>
+          <p class="card-body">Lange Arbeitstage mit Meetings, Projekten und kaum Pausen. Nur ca. <strong>1 Stunde Mittag</strong> und 15–30 Minuten am Abend. Freizeit existiert kaum — nur noch Zeit für Essen und Schlafen.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌙</div>
+          <h3 class="card-title">Der Sonntag</h3>
+          <p class="card-body">Einziger freier Tag der Woche — genutzt für <strong>Schlaf, Haushalt, Erledigungen und Erholung</strong>. Kein Freizeit-Sonntag. Eher ein Reparaturtag für den Körper.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌍</div>
+          <h3 class="card-title">Im Vergleich</h3>
+          <p class="card-body">In den <strong>Niederlanden</strong> arbeiten Menschen durchschnittlich ~29 Stunden — und gelten als eines der glücklichsten Länder der Welt. 996 bedeutet 2,5× mehr Arbeit.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <div class="week-vis">
+        <p class="week-vis-title">Eine Woche unter 996 — 24h-Aufteilung pro Tag</p>
+        <div class="week-days" id="weekVis">
+          <!-- filled by JS -->
+        </div>
+        <div class="week-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Arbeit (12h)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2a4a7f"></div> Schlaf (7h)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2d6a4f"></div> Freizeit / Essen (5h)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#4a3728"></div> Sonntag frei</div>
+        </div>
+      </div>
+
+      <div class="compare-wrap" style="margin-top:1.5rem">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Land</th>
+              <th>Ø Stunden / Woche</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="td-country"><span class="flag">🇨🇳</span>China (Tech)</td><td class="td-hours td-high">72h</td><td style="font-size:13px;color:var(--muted)">Extrembelastung</td></tr>
+            <tr><td class="td-country"><span class="flag">🇯🇵</span>Japan</td><td class="td-hours td-mid">38h</td><td style="font-size:13px;color:var(--muted)">Hoch</td></tr>
+            <tr><td class="td-country"><span class="flag">🇩🇪</span>Deutschland</td><td class="td-hours td-mid">35h</td><td style="font-size:13px;color:var(--muted)">Mittel</td></tr>
+            <tr><td class="td-country"><span class="flag">🇳🇱</span>Niederlande</td><td class="td-hours td-low">29h</td><td style="font-size:13px;color:var(--muted)">Weltspitze Work-Life</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep-line"></div>
+
+<!-- ════════════════ Q2: WER HAT ES GEPRÄGT? ════════════════ -->
+<section class="section" id="q2">
+  <div class="section-header reveal">
+    <div class="section-num">02</div>
+    <div class="section-title-group">
+      <p class="section-label">Frage 2</p>
+      <h2 class="section-title">Wer hat den 996-Rhythmus geprägt und warum wurde er eingeführt?</h2>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="pull-quote reveal">
+    <p class="pull-quote-text">Wenn ihr 996 machen könnt, ist das ein grosses Glück. Viele Unternehmen und viele Menschen haben nicht die Möglichkeit, 996 zu arbeiten.</p>
+    <p class="pull-quote-attr">— Jack Ma, Gründer von Alibaba Group, 2019</p>
+  </div>
+
+  <div class="two-col" style="margin-top:2.5rem">
+    <div class="timeline reveal reveal-delay-1">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">1990er</p>
+        <p class="timeline-event">Der Ursprung im Silicon Valley</p>
+        <p class="timeline-detail">Lange Arbeitszeiten entstanden als informelle Kultur in US-Startups. Chinesische Tech-Gründer übernahmen dieses Modell und radikalisierten es.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">2000er</p>
+        <p class="timeline-event">Rapid Growth — Chinas Tech-Boom</p>
+        <p class="timeline-detail">Unternehmen wie Alibaba, Baidu und Tencent wuchsen explosiv. Hoher Innovationsdruck und starker Wettbewerb schufen eine Kultur, in der lange Arbeitszeiten als Loyalitätsbeweis galten.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">2019</p>
+        <p class="timeline-event">Jack Mas öffentliche Verteidigung</p>
+        <p class="timeline-detail">Jack Ma verteidigt 996 öffentlich in einem Blogpost — und löst damit eine weltweite Debatte aus. Tausende Entwickler protestieren auf GitHub mit dem Projekt „996.ICU" (intensiv care unit).</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <p class="timeline-year">2021</p>
+        <p class="timeline-event">Chinas Regierung greift ein</p>
+        <p class="timeline-detail">Chinesische Gerichte erklären 996 offiziell für illegal. Trotzdem bleibt die Praxis in vielen Unternehmen bestehen — als informelle Erwartung.</p>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <p style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Warum wurde 996 eingeführt?</p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <h3 class="card-title">Schnelles Wachstum</h3>
+          <p class="card-body">Chinesische Tech-Firmen wollten sich <strong>in Rekordzeit entwickeln</strong>. Globaler Wettbewerb mit Google, Amazon und Meta erzeugte enormen Druck.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚔️</div>
+          <h3 class="card-title">Harter Wettbewerb</h3>
+          <p class="card-body">Viele Firmen kämpften gleichzeitig um <strong>dieselben Marktanteile</strong>. Mehr Arbeitszeit galt als Wettbewerbsvorteil.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💰</div>
+          <h3 class="card-title">Kurzfristige Logik</h3>
+          <p class="card-body">Aus Unternehmenssicht: <strong>mehr Stunden = mehr Output</strong>. Diese Logik funktioniert kurzfristig — aber nicht langfristig.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎓</div>
+          <h3 class="card-title">Kulturelle Tradition</h3>
+          <p class="card-body">Konfuzianische Werte betonen <strong>Fleiss und Aufopferung</strong>. Harte Arbeit gilt in der chinesischen Gesellschaft als Tugend.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep-line"></div>
+
+<!-- ════════════════ Q3: GESUNDHEIT ════════════════ -->
+<section class="section" id="q3">
+  <div class="section-header reveal">
+    <div class="section-num">03</div>
+    <div class="section-title-group">
+      <p class="section-label">Frage 3</p>
+      <h2 class="section-title">Welche Auswirkungen hat 996 auf Gesundheit und Leben der Arbeitnehmer?</h2>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="stat-blocks reveal">
+    <div class="stat-block">
+      <span class="stat-block-num">+29%</span>
+      <p class="stat-block-label">Erhöhtes Risiko für Herzerkrankungen bei >55h/Woche</p>
+    </div>
+    <div class="stat-block">
+      <span class="stat-block-num">+33%</span>
+      <p class="stat-block-label">Erhöhtes Schlaganfall-Risiko laut WHO</p>
+    </div>
+    <div class="stat-block">
+      <span class="stat-block-num">2×</span>
+      <p class="stat-block-label">Häufiger Burnout als bei Normalarbeitszeit</p>
+    </div>
+    <div class="stat-block">
+      <span class="stat-block-num">0h</span>
+      <p class="stat-block-label">Freie Zeit unter 996 an Werktagen</p>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:2.5rem">
+    <div class="reveal reveal-delay-1">
+      <p style="font-size:19px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Gesundheitliche Risiken</p>
+      <div class="health-list" id="healthBars">
+        <div class="health-item" data-pct="85">
+          <div class="health-header">
+            <span class="health-name">Chronischer Stress & Erschöpfung</span>
+            <span class="health-pct">85%</span>
+          </div>
+          <div class="health-track"><div class="health-fill"></div></div>
+          <p class="health-note">Bis zu 85% der 996-Arbeitenden berichten von dauerhaftem Erschöpfungsgefühl</p>
+        </div>
+        <div class="health-item" data-pct="70">
+          <div class="health-header">
+            <span class="health-name">Schlafmangel</span>
+            <span class="health-pct">70%</span>
+          </div>
+          <div class="health-track"><div class="health-fill"></div></div>
+          <p class="health-note">Weniger als 6 Stunden Schlaf pro Nacht bei vielen Beschäftigten</p>
+        </div>
+        <div class="health-item" data-pct="60">
+          <div class="health-header">
+            <span class="health-name">Depressionen & Angstzustände</span>
+            <span class="health-pct">60%</span>
+          </div>
+          <div class="health-track"><div class="health-fill"></div></div>
+          <p class="health-note">Signifikant erhöhte Raten psychischer Erkrankungen im Vergleich zu Normalarbeitszeit</p>
+        </div>
+        <div class="health-item" data-pct="55">
+          <div class="health-header">
+            <span class="health-name">Herzerkrankungen</span>
+            <span class="health-pct">55%</span>
+          </div>
+          <div class="health-track"><div class="health-fill"></div></div>
+          <p class="health-note">WHO-Studien belegen erhöhtes Herzrisiko bei Überarbeitung</p>
+        </div>
+        <div class="health-item" data-pct="90">
+          <div class="health-header">
+            <span class="health-name">Verlust sozialer Beziehungen</span>
+            <span class="health-pct">90%</span>
+          </div>
+          <div class="health-track"><div class="health-fill"></div></div>
+          <p class="health-note">Kaum Zeit für Familie, Freunde, Hobbys oder Selbstfürsorge</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <p style="font-size:19px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem">Auswirkungen auf das Leben</p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👨‍👩‍👧</div>
+          <h3 class="card-title">Familie & Beziehungen</h3>
+          <p class="card-body">Menschen im 996-System sehen ihre Kinder kaum aufwachsen. Scheidungsraten steigen, soziale Isolation nimmt zu. <strong>Arbeit bestimmt den gesamten Alltag.</strong></p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Produktivität — ein Mythos</h3>
+          <p class="card-body">Studien zeigen: nach 50 Stunden sinkt die Produktivität pro Stunde dramatisch. Bei 70+ Stunden ist <strong>der Output vergleichbar mit 55 Stunden</strong> — nur mit doppeltem Schaden.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔥</div>
+          <h3 class="card-title">Burnout-Epidemie</h3>
+          <p class="card-body">China erlebt eine stille Burnout-Welle. Der Begriff <strong>„Tang ping"</strong> (flach liegen) entstand als Gegenreaktion: junge Menschen verweigern sich dem 996-System völlig.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚖️</div>
+          <h3 class="card-title">Rechtliche Grauzone</h3>
+          <p class="card-body">Das chinesische Arbeitsrecht schreibt 40h/Woche vor. 996 ist offiziell <strong>illegal</strong> — wird aber durch informellen Druck und Kündigung erzwungen.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep-line"></div>
+
+<!-- ════════════════ Q4: UNTERNEHMEN ════════════════ -->
+<section class="section" id="q4">
+  <div class="section-header reveal">
+    <div class="section-num">04</div>
+    <div class="section-title-group">
+      <p class="section-label">Frage 4</p>
+      <h2 class="section-title">Welche Unternehmen unterstützen oder kritisieren das 996-Modell?</h2>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+
+  <div class="company-grid reveal">
+    <div class="company-card pro">
+      <span class="company-tag tag-pro">Befürworter</span>
+      <p class="company-name">Alibaba Group</p>
+      <p class="company-quote">Jack Ma nannte 996 öffentlich ein „Glück" und rühmte es als Zeichen von Engagement und Ehrgeiz.</p>
+      <p class="company-detail">Als grösster chinesischer E-Commerce-Konzern setzte Alibaba den Standard. Die Unternehmenskultur glorifiziert lange Arbeitszeiten und Aufopferung als Weg zum Erfolg.</p>
+    </div>
+    <div class="company-card pro">
+      <span class="company-tag tag-pro">Befürworter</span>
+      <p class="company-name">Huawei</p>
+      <p class="company-quote">Gründer Ren Zhengfei: „Wer nicht hart arbeitet, wird von denen ersetzt, die es tun."</p>
+      <p class="company-detail">Huawei ist bekannt für extreme Arbeitskultur. Mitarbeitende berichten von impliziten Erwartungen, 60–70+ Stunden zu arbeiten — oft ohne Überstundenzahlung.</p>
+    </div>
+    <div class="company-card pro">
+      <span class="company-tag tag-pro">Befürworter</span>
+      <p class="company-name">Tencent</p>
+      <p class="company-quote">Interne Memos zeigen: Führungskräfte erwarten Erreichbarkeit rund um die Uhr, auch an Wochenenden.</p>
+      <p class="company-detail">Als Mutterkonzern von WeChat und grösster Gaming-Firma weltweit ist Tencent berüchtigt für seine intensive Arbeitsatmosphäre im Wettbewerb um Talente.</p>
+    </div>
+    <div class="company-card con">
+      <span class="company-tag tag-con">Kritiker / Gegenbewegung</span>
+      <p class="company-name">996.ICU</p>
+      <p class="company-quote">„Arbeite nach 996, lande auf der Intensivstation." — Motto der GitHub-Bewegung</p>
+      <p class="company-detail">2019 starteten chinesische Entwickler auf GitHub ein Protest-Repository, das viral ging. Über 250.000 Sterne in wenigen Tagen — ein globales Symbol des Widerstands.</p>
+    </div>
+    <div class="company-card con">
+      <span class="company-tag tag-con">Reform</span>
+      <p class="company-name">Chinas Gerichte</p>
+      <p class="company-quote">2021 erklärte das Oberste Volksgericht 996 explizit für rechtswidrig.</p>
+      <p class="company-detail">Ein historisches Urteil — doch Experten sagen, die Praxis bleibt verbreitet. Arbeitnehmer fürchten Konsequenzen, wenn sie ihre Rechte einfordern.</p>
+    </div>
+    <div class="company-card con">
+      <span class="company-tag tag-con">Alternativmodell</span>
+      <p class="company-name">Niederlande</p>
+      <p class="company-quote">29 Stunden pro Woche — und trotzdem Weltspitze in Produktivität und Lebensqualität.</p>
+      <p class="company-detail">Das niederländische Modell beweist: weniger Arbeitszeit bedeutet nicht weniger Leistung. Eine Work-Life-Balance ist kein Luxus — sie ist der Schlüssel zu nachhaltigem Erfolg.</p>
+    </div>
+  </div>
+
+  <div class="pull-quote reveal" style="margin-top:3rem">
+    <p class="pull-quote-text">Die Frage ist nicht, wie viel wir produzieren können. Die Frage ist: Für wen — und zu welchem Preis?</p>
+    <p class="pull-quote-attr">— Kernfrage der globalen Arbeitszeitdebatte</p>
+  </div>
+</section>
+
+<div class="footer">
+  <p>996 Arbeitsrhythmus · Interaktives Infobrett · Alle Daten basieren auf Studien der WHO, ILO und öffentlichen Quellen</p>
+</div>
+
+<script>
+  // ── Smooth scroll ──
+  function scrollTo(id) {
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── Intersection Observer for reveals ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
+
+  // ── Health bars ──
+  const healthObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.health-item').forEach((item, i) => {
+          const pct = item.dataset.pct;
+          setTimeout(() => {
+            item.querySelector('.health-fill').style.width = pct + '%';
+          }, i * 150);
+        });
+        healthObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const hList = document.getElementById('healthBars');
+  if (hList) healthObserver.observe(hList);
+
+  // ── Week visualizer ──
+  const days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  const container = document.getElementById('weekVis');
+  const PX_PER_H = 220 / 24;
+
+  days.forEach((d, i) => {
+    const isSun = i === 6;
+    const col = document.createElement('div');
+    col.className = 'day-col';
+
+    const name = document.createElement('div');
+    name.className = 'day-name';
+    name.style.color = isSun ? 'var(--gold)' : '';
+    name.textContent = d;
+
+    const barWrap = document.createElement('div');
+    barWrap.className = 'day-bar-wrap';
+
+    if (isSun) {
+      const seg = document.createElement('div');
+      seg.className = 'bar-segment seg-sunday';
+      seg.style.height = '0px';
+      barWrap.appendChild(seg);
+      setTimeout(() => { seg.style.height = (24 * PX_PER_H) + 'px'; }, 200);
+    } else {
+      const segs = [
+        { cls: 'seg-sleep', h: 7 },
+        { cls: 'seg-free',  h: 5 },
+        { cls: 'seg-work',  h: 12 },
+      ];
+      segs.forEach(s => {
+        const seg = document.createElement('div');
+        seg.className = 'bar-segment ' + s.cls;
+        seg.style.height = '0px';
+        barWrap.appendChild(seg);
+        setTimeout(() => { seg.style.height = (s.h * PX_PER_H) + 'px'; }, 300 + i * 60);
+      });
+    }
+
+    const hrs = document.createElement('div');
+    hrs.className = 'day-hours';
+    hrs.textContent = isSun ? 'Frei' : '12h';
+    hrs.style.color = isSun ? 'var(--gold)' : 'var(--red)';
+
+    col.appendChild(name);
+    col.appendChild(barWrap);
+    col.appendChild(hrs);
+    container.appendChild(col);
+  });
+
+  // trigger bars when section scrolls into view
+  const weekObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // bars already animate via timeout — re-trigger
+        const fills = container.querySelectorAll('.bar-segment');
+        weekObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  weekObserver.observe(container);
+</script>
+</body>
+</html>
